@@ -111,7 +111,7 @@ def page_to_ads(page_content):
     exp = r'<div class="ad">(.*?)<div class="cleas"></div>'
     expp = re.compile(exp, re.DOTALL)
 
-    return re.findall(exp, page_content)   #ta zadeva ti naredi seznam
+    return re.findall(expp, page_content)   #ta zadeva ti naredi seznam
 
 #.*<a title="(?P<naslov>.*)" href".*</h3>\s*(?P<vsebina>.*?)<div .*?<b>(?P<rodovnik>.*?)</b>
 # Definirajte funkcijo, ki sprejme niz, ki predstavlja oglas, in izlušĝi
@@ -122,7 +122,7 @@ def get_dict_from_ad_block(directory, filename):
     """Funkcija iz niza za posamezen oglasni blok izlušĝi podatke o imenu, ceni
     in opisu ter vrne slovar, ki vsebuje ustrezne podatke
     """
-    seznam = page_to_ads(directory, filename)
+    seznam = page_to_ads_moja(directory, filename)
     slovar = {}
     for i in range( len(seznam)):
         slovar[f'oglas_{i}'] = {}
