@@ -1,3 +1,7 @@
+import json
+import re
+import requests
+
 ###############################################################################
 # Hvaležni medved
 #
@@ -25,6 +29,14 @@ medved. Zvrhano zibelko sladkih hrušk mi je prinesel za en sam izdrt trn"."""
 # >>> find_words(test_text, 'de')
 # {'izdere', 'debel', 'oddide', 'začudeno'}
 ###############################################################################
+def find_words(vsebina, niz):
+    vzorec = (r'(")*?[A-Z]*[a-z]*' +niz+ r'([a-z]*)')
+    for pi in re.finditer(vzorec,vsebina):
+        print(pi.groupdict())
+
+    print(vzorec)
+    matches = re.findall(vzorec, vsebina)
+    return set(matches)
 
 
 ###############################################################################
@@ -34,7 +46,11 @@ medved. Zvrhano zibelko sladkih hrušk mi je prinesel za en sam izdrt trn"."""
 # >>> find_prefix(test_text, 'zi')
 # {'zibala', 'zibel', 'zibelko'}
 ###############################################################################
-
+def find_prefix(vsebina, niz):
+    vzorec = r'\b' + niz + r'\w*'
+    print(vzorec)
+    for zadetek in re.finditer(vzorec, vsebina):
+        print(zadetek.groupdict())
 
 ###############################################################################
 # 3) Sestavite funkcijo [find_suffix], ki vrne množico vseh besed, ki se
@@ -43,7 +59,11 @@ medved. Zvrhano zibelko sladkih hrušk mi je prinesel za en sam izdrt trn"."""
 # >>> find_suffix(test_text, 'la')
 # {'zibala', 'razveselila', 'prestrašila', 'šivala', 'opazila', 'tla'}
 ###############################################################################
-
+def find_suffix(vsebina, niz):
+    vzorec = r'\b[A-Z]*[a-ž]*' + niz + r'\b'
+    print(vzorec)
+    for zadetek in re.finditer(vzorec, vsebina):
+        print(zadetek.groupdict())
 
 ###############################################################################
 # 4) Sestavite funkcijo [double_letters], ki sprejme niz in vrne množico vseh
@@ -52,3 +72,13 @@ medved. Zvrhano zibelko sladkih hrušk mi je prinesel za en sam izdrt trn"."""
 # >>> double_letters('A volunteer is worth twenty pressed men.')
 # {'volunteer', 'pressed'}
 ###############################################################################
+def double_letters(vsebina):
+    razbitje=vsebina.split()
+    #print(razbitje)
+    seznam = []
+    for i in range(len(razbitje)):
+        ena_beseda = razbitje[i]
+        for j in range(len(ena_beseda)-1):
+            if ena_beseda[j] == ena_beseda[j+1]:
+                seznam += [ena_beseda]
+    return(seznam)
