@@ -36,7 +36,7 @@ def download_url_to_string(url):
     try:
         # del kode, ki morda sproži napako
         page_content = requests.get(url).text
-    except requests.exeptions.RequestException as e:
+    except requests.exceptions.ConnectionError as e:
         # koda, ki se izvede pri napaki
         print (e)
         page_content = ''
