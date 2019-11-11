@@ -187,11 +187,12 @@ let rec unzip_tlrec list =
  - : int = 12
 [*----------------------------------------------------------------------------*)
 
-(* let rec loop condition f x =       *)
-(*   let rec loop' condition f x acc =        *)
-(*     if condition then loop' f (f x) x else acc       *)
-(*   in       *)
-(*   loop' condition f x 0        *)
+let rec loop condition f x =
+  let rec loop' condition f x acc = 
+    let acc = x in
+    if condition (x) then loop' condition f (f x) (acc) else acc
+  in
+  loop' condition f x 0
 
 
 (*----------------------------------------------------------------------------*]
@@ -204,7 +205,13 @@ let rec unzip_tlrec list =
  - : string = "FICUS"
 [*----------------------------------------------------------------------------*)
 
-let rec fold_left_no_acc = ()
+let rec fold_left_no_acc f list =
+  match list with
+    | [] -> []
+    | x :: xs -> 
+      let xys = fold_left_no_acc f xs in 
+      (f x xys)
+
 
 (*----------------------------------------------------------------------------*]
  Funkcija [apply_sequence f x n] vrne seznam zaporednih uporab funkcije [f] na
