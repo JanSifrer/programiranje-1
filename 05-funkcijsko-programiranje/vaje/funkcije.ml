@@ -207,7 +207,7 @@ let rec loop condition f x =
 
 let rec fold_left_no_acc f list =
   match list with
-    | [] -> []
+    | [] -> "a"
     | x :: xs -> 
       let xys = fold_left_no_acc f xs in 
       (f x xys)

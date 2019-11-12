@@ -201,7 +201,15 @@ let rec is_palindrome xs =
  - : int list = [5; 4; 3; 3; 4]
 [*----------------------------------------------------------------------------*)
 
-let rec max_on_components = ()
+let rec max_on_components alist blist =
+  let rec max' acc alist blist =
+    match (alist, blist) with
+    | ([],[]) -> acc
+    | (_, []) -> acc
+    | ([], _) -> acc
+    | (x :: al, y::bl) -> if (y >= x) then max' (y :: acc) al bl else max' (x :: acc) al bl
+  in
+  reverse (max' [] alist blist)
   
 
 (*----------------------------------------------------------------------------*]
