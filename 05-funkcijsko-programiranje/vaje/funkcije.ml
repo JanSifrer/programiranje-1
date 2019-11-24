@@ -207,7 +207,7 @@ let rec loop condition f x =
 
 let rec fold_left_no_acc f list =
   match list with
-    | [] -> "a"
+    | [] -> ""
     | x :: xs -> 
       let xys = fold_left_no_acc f xs in 
       (f x xys)
@@ -225,7 +225,16 @@ let rec fold_left_no_acc f list =
  - : int list = []
 [*----------------------------------------------------------------------------*)
 
-let rec apply_sequence = ()
+let rec apply_sequence f x n =
+  let rec apply' f x n acc bcc = 
+    if n < 0 then (acc)
+    else 
+      let bcc = x in
+      let x = f x in
+      (apply' f x (n-1) (bcc :: acc) bcc) 
+    in
+  reverse (apply' f x n [] x)
+
 
 (*----------------------------------------------------------------------------*]
  Funkcija [filter f list] vrne seznam elementov [list], pri katerih funkcija [f]
@@ -235,8 +244,13 @@ let rec apply_sequence = ()
  - : int list = [4; 5]
 [*----------------------------------------------------------------------------*)
 
-let rec filter = ()
-
+let rec filter f list =
+  let rec filter' f list acc =
+    match list with
+    | [] -> acc
+    | x :: xs  -> if f x then filter' f xs ((x) :: acc) else filter' f xs acc
+  in
+  reverse(filter' f list [])
 (*----------------------------------------------------------------------------*]
  Funkcija [exists] sprejme seznam in funkcijo, ter vrne vrednost [true] čim
  obstaja element seznama, za katerega funkcija vrne [true] in [false] sicer.
@@ -248,7 +262,17 @@ let rec filter = ()
  - : bool = false
 [*----------------------------------------------------------------------------*)
 
-let rec exists = ()
+let rec exists f list =
+  let rec exists' f list =
+    match list with
+    | [] -> false
+    | x :: xs -> if f x 
+      then true
+      else exists' f xs
+    in
+    exists' f list
+
+      
 
 (*----------------------------------------------------------------------------*]
  Funkcija [first f default list] vrne prvi element seznama, za katerega
@@ -261,4 +285,12 @@ let rec exists = ()
  - : int = 0
 [*----------------------------------------------------------------------------*)
 
-let rec first = ()
+let rec first f default list =
+  let rec first' f list =
+    match list with
+    | [] -> default
+    | x :: xs -> if f x 
+      then x
+      else first' f xs
+    in
+    first' f list
