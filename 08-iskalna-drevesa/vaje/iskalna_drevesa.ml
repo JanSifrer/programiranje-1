@@ -300,7 +300,9 @@ let rec dict_get key = function
  d : 2
  - : unit = ()
 [*----------------------------------------------------------------------------*)
-
+(*let rec print_dict = function
+	| Empty -> None
+	| Node (lt, (k, v), rt) when *)
 
 (*----------------------------------------------------------------------------*]
  Funkcija [dict_insert key value dict] v slovar [dict] pod ključ [key] vstavi
