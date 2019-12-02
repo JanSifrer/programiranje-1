@@ -243,7 +243,9 @@ module Polar : COMPLEX = struct
   let rad_of_deg deg = (deg /. 180.) *. pi
   let deg_of_rad rad = (rad /. pi) *. 180.
 
-  let eq x y = failwith "later"
+  let eq x y = 
+    (x.magn = 0. && y.magn = 0)
+    || (x.magn = y.magn && x.arg = y.arg)
   (* Dodajte manjkajoče! *)
 
 end
