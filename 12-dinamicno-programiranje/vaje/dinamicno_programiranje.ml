@@ -68,3 +68,41 @@ let articles = [|
   ("Nutella", 4.99, 0.75);
   ("juice", 1.15, 2.0)
 |]
+
+
+(*----------------------------------------------------------------------------*]
+ Cena sprehoda po drevesu je vsota vrednosti v vseh obiskanih vozliščih.
+ Poiščite vrednost najdražjega sprehoda od korena do listov drevesa.
+ - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+ # max_path Empty ;;
+ - : 'a option = None
+ # max_path test_tree;;
+- : int option = Some 21
+[*----------------------------------------------------------------------------*)
+
+type 'a tree
+ = Empty
+ | Node of ('a tree) * 'a * ('a tree)
+
+let leaf x = Node (Empty, x, Empty)
+
+let test_tree = Node( Node(leaf 0, 2, leaf 13), 5, Node(leaf 9, 7, leaf 4))
+
+(*----------------------------------------------------------------------------*]
+ Cena sprehoda po drevesu je vsota vrednosti v vseh obiskanih vozliščih.
+ Poiščite najdražji sprehod od korena do listov drevesa: Funkcija pot vrne v 
+ obliki seznama smeri, katere je potrebno izbrati za najdražji sprehod.
+
+ Napišite tudi funkcijo, ki sprehod pretvori v elemente sprehoda
+ - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+ # max_path_trace Empty ;;
+ - : 'a list = []
+ # max_path_trace test_tree;;
+- : direction list = [Right, Left]
+ # reconstruct (max_path_trace test_tree);;
+- : int list = [5; 7; 9]
+[*----------------------------------------------------------------------------*)
+
+type direcion 
+  = Left
+  | Right
