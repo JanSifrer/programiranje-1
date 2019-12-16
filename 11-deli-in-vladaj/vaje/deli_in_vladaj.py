@@ -1,3 +1,4 @@
+import random
 ###############################################################################
 # Želimo definirati pivotiranje na mestu za tabelo [a]. Ker bi želeli
 # pivotirati zgolj dele tabele, se omejimo na del tabele, ki se nahaja med
@@ -26,8 +27,21 @@
 #     >>> a
 #     [10, 2, 0, 4, 11, 15, 17, 5, 18]
 ###############################################################################
-
-
+def pivot(a, start, end):
+    if end <= start:
+        #Nič ni za naredit zato vrne start
+        return start
+    first_larger = start +1
+    for i in range(start, end+1):
+        if a[i] < a[start]:
+            #ta element more biti na levi strani od pivota
+            a[first_larger], a[i] = a[i], a[first_larger]
+            #Zamenjamo tadva elementa
+            first_larger += 1
+    #premaknemo pivot na pravo mesto
+    #Zamnejamo njegovo pozicijo z zadnjim najmanjšim elementom
+    a[start], a[first_larger-1] = a[first_larger-1], a[start]
+    return first_larger - 1
 
 ###############################################################################
 # V tabeli želimo poiskati vrednost k-tega elementa po velikosti.
@@ -44,6 +58,24 @@
 # jo rešite brez da v celoti uredite tabelo [a].
 ###############################################################################
 
+def kth_element(a, k):
+    for i in range(len(a)-1):
+        for j in range(len(a)-1):
+                pivot(a, i, j)
+    return a[k]
+
+def kth_elementt(a, k):
+    def kth(lower, upper):
+        candidat_i= pivot(a, lower, upper)
+        if candidat_i == k:
+            return a[candidat_i]
+        elif candidat_i < k:
+            return kth(candidat_i+1, k)
+        #NEKI SE MANKA
+    
+        
+            
+        
 
 
 ###############################################################################
@@ -59,6 +91,27 @@
 #     >>> quicksort(a)
 #     [2, 3, 4, 5, 10, 11, 15, 17, 18]
 ###############################################################################
+def quicksort(a):
+    def qsort (a, s, e):
+        if e <= s:
+            return
+        p_i = pivot(a, s, e)
+        qsort(a, s, p_i-1)
+        qsort(a, p_i+1, e)
+    qsort(a, 0, len(a)-1)
+
+def test_quicksort():
+    for _ in range(1000):
+        a = [random.randint(-10000, 10000) for _ in range(10000)]
+        b1 = a[:]
+        b2 = a[:]
+        quicksort(b1)
+        b2.sort()
+        if b1 != b2:
+            return "Ne dela, probi {}".format(a)
+        else:
+            print("Še {}".format(1000-_))
+
 
 
 
